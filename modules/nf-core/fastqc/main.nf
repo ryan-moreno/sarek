@@ -26,13 +26,13 @@ process FASTQC {
     def rename_to = old_new_pairs*.join(' ').join(' ')
     def renamed_files = old_new_pairs.collect{ old_name, new_name -> new_name }.join(' ')
 
-    def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('GB')
-    // FastQC memory value allowed range (100 - 100000)
-    def fastqc_memory = memory_in_mb > 100000 ? 100000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
+    def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
+    // FastQC memory value allowed range (100 - 10000)
+    def fastqc_memory = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
 
     // To prevent running out of virtual memory
     fastqc_memory = (fastqc_memory * 0.8) as int
-    fastqc_memory = fastqc_memory > 100000 ? 100000 : (fastqc_memory < 100 ? 100 : fastqc_memory)
+    fastqc_memory = fastqc_memory > 10000 ? 10000 : (fastqc_memory < 100 ? 100 : fastqc_memory)
 
     """
     printf "%s %s\\n" $rename_to | while read old_name new_name; do
