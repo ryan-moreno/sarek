@@ -32,6 +32,7 @@ process FASTQC {
 
     // To prevent running out of virtual memory
     fastqc_memory = (fastqc_memory * 0.8) as int
+    fastqc_memory = fastqc_memory > 100000 ? 100000 : (fastqc_memory < 100 ? 100 : fastqc_memory)
 
     """
     printf "%s %s\\n" $rename_to | while read old_name new_name; do
