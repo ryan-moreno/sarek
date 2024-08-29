@@ -30,6 +30,9 @@ process FASTQC {
     // FastQC memory value allowed range (100 - 10000)
     def fastqc_memory = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
 
+    // To prevent running out of virtual memory
+    fastqc_memory = fastqc_memory * 0.8 
+
     """
     printf "%s %s\\n" $rename_to | while read old_name new_name; do
         [ -f "\${new_name}" ] || ln -s \$old_name \$new_name
