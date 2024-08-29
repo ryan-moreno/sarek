@@ -26,9 +26,9 @@ process FASTQC {
     def rename_to = old_new_pairs*.join(' ').join(' ')
     def renamed_files = old_new_pairs.collect{ old_name, new_name -> new_name }.join(' ')
 
-    def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
-    // FastQC memory value allowed range (100 - 1000000)
-    def fastqc_memory = memory_in_mb > 1000000 ? 1000000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
+    def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('GB')
+    // FastQC memory value allowed range (100 - 100000)
+    def fastqc_memory = memory_in_mb > 100000 ? 100000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
 
     // To prevent running out of virtual memory
     fastqc_memory = (fastqc_memory * 0.8) as int
