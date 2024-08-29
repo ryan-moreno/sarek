@@ -28,7 +28,7 @@ process FASTQC {
 
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // FastQC memory value allowed range (100 - 1000000)
-    def fastqc_memory = memory_in_mb > 20000 ? 1000000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
+    def fastqc_memory = memory_in_mb > 1000000 ? 1000000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
 
     // To prevent running out of virtual memory
     fastqc_memory = (fastqc_memory * 0.8) as int
